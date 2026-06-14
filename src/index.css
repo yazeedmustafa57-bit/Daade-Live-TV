@@ -230,3 +230,94 @@ section { animation: fadeInUp 0.6s ease-out both; }
 .footer-link:hover {
   color: #f43f5e;
 }
+
+/* ===== Tab Buttons (LivePlayer) ===== */
+.tab-btn {
+  flex: 1;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: transparent;
+  color: #94a3b8;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all .2s;
+}
+.tab-btn:hover { background: rgba(255,255,255,0.04); color: #e8edf2; }
+.tab-active {
+  background: rgba(244,63,94,0.15);
+  border-color: rgba(244,63,94,0.3);
+  color: #f43f5e;
+}
+
+/* ===== Scrollable Channel List ===== */
+.channel-scroll {
+  max-height: 320px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+.channel-scroll::-webkit-scrollbar { width: 4px; }
+.channel-scroll::-webkit-scrollbar-track { background: transparent; }
+.channel-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
+
+/* ===== Featured External Section ===== */
+.external-card {
+  background: linear-gradient(135deg, rgba(244,63,94,0.1), rgba(99,102,241,0.1));
+  border: 1px solid rgba(244,63,94,0.2);
+  border-radius: 16px;
+  padding: 32px;
+  text-align: center;
+  transition: all .25s;
+  cursor: pointer;
+  text-decoration: none;
+  display: block;
+  color: inherit;
+}
+.external-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 40px rgba(244,63,94,0.15);
+  border-color: rgba(244,63,94,0.4);
+}
+.external-icon { font-size: 3rem; display: block; margin-bottom: 12px; }
+.external-card h3 { font-size: 1.3rem; font-weight: 700; margin-bottom: 6px; }
+.external-card p { font-size: 0.9rem; color: #94a3b8; max-width: 500px; margin: 0 auto; }
+.external-badge {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 6px 18px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #f43f5e, #e11d48);
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+/* ===== Series Cards ===== */
+.series-card {
+  background: #12141c;
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 16px;
+  padding: 24px;
+  cursor: pointer;
+  transition: all .25s;
+}
+.series-card:hover {
+  border-color: rgba(99,102,241,0.3);
+  transform: translateY(-3px);
+}
+.series-ep {
+  font-size: 0.75rem;
+  color: #64748b;
+  margin-top: 4px;
+}
+.series-btn {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 6px 16px;
+  border-radius: 8px;
+  background: rgba(99,102,241,0.15);
+  color: #818cf8;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
