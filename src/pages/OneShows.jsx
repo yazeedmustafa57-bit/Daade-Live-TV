@@ -47,7 +47,7 @@ export default function OneShows() {
                 border: 'none',
               }}
               allow="fullscreen"
-              sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
+              
             />
           </div>
           <p style={{ textAlign: 'center', marginTop: '16px', fontSize: '0.85rem', color: '#64748b' }}>
