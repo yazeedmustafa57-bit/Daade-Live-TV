@@ -12,13 +12,13 @@ export default function Home() {
         <meta name="keywords" content="Daade Live TV, Live TV, kostenlos TV, Online TV, Stream, Fernsehen, Live Stream" />
         <meta name="robots" content="index, follow" />
         <meta name="googlebot" content="index, follow" />
-        <link rel="canonical" href="https://daade-live-tv.de" />
+        <link rel="canonical" href="https://yazeedmustafa57-bit.github.io/Daade-Live-TV" />
 
         {/* Open Graph */}
         <meta property="og:title" content="Daade Live TV – Kostenlose Live-TV Streams" />
         <meta property="og:description" content="Schaue kostenlos Live-TV online – jederzeit und überall." />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://daade-live-tv.de" />
+        <meta property="og:url" content="https://yazeedmustafa57-bit.github.io/Daade-Live-TV" />
         <meta property="og:image" content="/og-image.png" />
 
         {/* Twitter Card */}
@@ -32,11 +32,11 @@ export default function Home() {
             "@context": "https://schema.org",
             "@type": "WebSite",
             "name": "Daade Live TV",
-            "url": "https://daade-live-tv.de",
+            "url": "https://yazeedmustafa57-bit.github.io/Daade-Live-TV",
             "description": "Kostenlose Live-TV Streams online gucken",
             "potentialAction": {
               "@type": "SearchAction",
-              "target": "https://daade-live-tv.de/?q={search_term_string}",
+              "target": "https://yazeedmustafa57-bit.github.io/Daade-Live-TV/?q={search_term_string}",
               "query-input": "required name=search_term_string"
             }
           })}

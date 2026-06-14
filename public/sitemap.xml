@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.w3.org/2005/Atom">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://daade-live-tv.de/</loc>
+    <loc>https://yazeedmustafa57-bit.github.io/Daade-Live-TV/</loc>
     <lastmod>2025-06-14</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://daade-live-tv.de/movies</loc>
+    <loc>https://yazeedmustafa57-bit.github.io/Daade-Live-TV/movies</loc>
     <lastmod>2025-06-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
