@@ -1,89 +1,78 @@
-import { useState, useCallback, useEffect } from 'react'
+import { useState, useCallback } from 'react'
 import LoadingAnimation from '../components/LoadingAnimation'
 
 export default function Home() {
-  const [showAnimation, setShowAnimation] = useState(true)
-  const [showRedirect, setShowRedirect] = useState(false)
+  const [showContent, setShowContent] = useState(false)
+  const [showLoading, setShowLoading] = useState(true)
 
   const handleComplete = useCallback(() => {
-    setShowAnimation(false)
-    setShowRedirect(true)
+    setShowContent(true)
+    setTimeout(() => setShowLoading(false), 600)
   }, [])
-
-  // Redirect to 1shows.org after animation finishes
-  useEffect(() => {
-    if (showRedirect) {
-      const timer = setTimeout(() => {
-        window.location.href = 'https://www.1shows.org'
-      }, 1200)
-      return () => clearTimeout(timer)
-    }
-  }, [showRedirect])
 
   return (
     <>
-      {showAnimation && <LoadingAnimation onComplete={handleComplete} />}
+      {showLoading && <LoadingAnimation onComplete={handleComplete} />}
 
-      {showRedirect && (
+      <div style={{
+        position: 'fixed',
+        inset: 0,
+        zIndex: showContent ? 1 : 0,
+        opacity: showContent ? 1 : 0,
+        transition: 'opacity 0.8s ease-in',
+        pointerEvents: showContent ? 'auto' : 'none',
+        background: '#0a0a0f',
+      }}>
+        <iframe
+          src="https://www.1shows.org"
+          title="1Shows"
+          style={{
+            width: '100%',
+            height: '100%',
+            border: 'none',
+          }}
+          allow="fullscreen"
+        />
+
+        {/* Fallback-Leiste unten */}
         <div style={{
           position: 'fixed',
-          inset: 0,
+          bottom: '16px',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          zIndex: 10,
           display: 'flex',
-          flexDirection: 'column',
+          gap: '8px',
           alignItems: 'center',
-          justifyContent: 'center',
-          background: '#000',
-          color: '#fff',
-          zIndex: 50,
-          animation: 'fadeIn 0.8s ease-out',
+          background: 'rgba(0,0,0,0.8)',
+          backdropFilter: 'blur(12px)',
+          border: '1px solid rgba(255,255,255,0.1)',
+          borderRadius: '14px',
+          padding: '10px 20px',
+          fontSize: '0.85rem',
         }}>
-          <div style={{ fontSize: '4rem', marginBottom: '16px' }}>🍿</div>
-          <h1 style={{
-            fontSize: 'clamp(1.5rem, 4vw, 2.5rem)',
-            fontWeight: 700,
-            margin: '0 0 8px',
-            background: 'linear-gradient(135deg, #E50914, #818cf8)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-          }}>
-            Yazeed Shows
-          </h1>
-          <p style={{ color: '#94a3b8', margin: '0 0 24px' }}>
-            Du wirst weitergeleitet ...
-          </p>
+          <span style={{ color: '#94a3b8' }}>
+            🌐 Sprache: Oben rechts auf <strong style={{ color: '#f43f5e' }}>DE</strong> klicken
+          </span>
+          <span style={{ color: '#333' }}>|</span>
           <a
             href="https://www.1shows.org"
+            target="_blank"
+            rel="noopener noreferrer"
             style={{
-              display: 'inline-block',
-              padding: '14px 40px',
-              borderRadius: '12px',
-              background: '#E50914',
               color: '#fff',
-              fontWeight: 700,
-              fontSize: '1.1rem',
               textDecoration: 'none',
-              transition: 'transform 0.2s',
+              fontWeight: 600,
+              padding: '6px 16px',
+              borderRadius: '8px',
+              background: '#E50914',
+              fontSize: '0.82rem',
             }}
-            onMouseOver={e => e.currentTarget.style.transform = 'scale(1.05)'}
-            onMouseOut={e => e.currentTarget.style.transform = 'scale(1)'}
           >
-            🎬 Zu 1Shows.org
+            🔗 Öffnen
           </a>
-          <p style={{ color: '#64748b', fontSize: '0.8rem', marginTop: '16px' }}>
-            Öffnet in einem neuen Tab – oder automatisch in 1 Sekunde
-          </p>
-          <p style={{ color: '#64748b', fontSize: '0.78rem', marginTop: '8px' }}>
-            🌐 Oben rechts auf 1Shows: Sprachauswahl → <strong style={{ color: '#f43f5e' }}>DE</strong> für Deutsch
-          </p>
         </div>
-      )}
-
-      <style>{`
-        @keyframes fadeIn {
-          from { opacity: 0; }
-          to { opacity: 1; }
-        }
-      `}</style>
+      </div>
     </>
   )
 }
