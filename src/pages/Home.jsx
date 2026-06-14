@@ -1,28 +1,36 @@
-import { useState, useEffect } from 'react'
+import { useState, useCallback } from 'react'
 import LoadingAnimation from '../components/LoadingAnimation'
 
 export default function Home() {
-  const [done, setDone] = useState(false)
+  const [showContent, setShowContent] = useState(false)
+  const [showLoading, setShowLoading] = useState(true)
 
-  useEffect(() => {
-    if (done) {
-      window.location.href = 'https://www.1shows.org'
-    }
-  }, [done])
-
-  useEffect(() => {
-    // Fallback: falls Animation hängt
-    const timer = setTimeout(() => {
-      if (!done) {
-        window.location.href = 'https://www.1shows.org'
-      }
-    }, 6000)
-    return () => clearTimeout(timer)
-  }, [done])
+  const handleComplete = useCallback(() => {
+    setShowContent(true)
+    setTimeout(() => setShowLoading(false), 600)
+  }, [])
 
   return (
     <>
-      {!done && <LoadingAnimation onComplete={() => setDone(true)} />}
+      {showLoading && <LoadingAnimation onComplete={handleComplete} />}
+
+      <iframe
+        src="https://www.1shows.org"
+        title="1Shows"
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100vw',
+          height: '100vh',
+          border: 'none',
+          background: '#0a0a0f',
+          opacity: showContent ? 1 : 0,
+          transition: 'opacity 0.8s ease-in',
+          pointerEvents: showContent ? 'auto' : 'none',
+        }}
+        allow="fullscreen"
+      />
     </>
   )
 }
