@@ -14,9 +14,19 @@ export default function LoadingAnimation({ onComplete }) {
     let animationId = null
     let startTime = performance.now()
     let finished = false
+    let ready = false
 
     const RED = '#E50914'
-    const DURATION = 2800
+    const DURATION = 2600
+
+    // Fallback: if animation takes too long, still finish
+    const fallbackTimer = setTimeout(() => {
+      if (!finished) {
+        finished = true
+        ready = true
+        onComplete?.()
+      }
+    }, 5000)
 
     function draw() {
       const elapsed = performance.now() - startTime
@@ -31,12 +41,14 @@ export default function LoadingAnimation({ onComplete }) {
       ctx.fillStyle = '#000'
       ctx.fillRect(0, 0, w, h)
 
-      // Subtle glow
-      const glow = ctx.createRadialGradient(w * 0.5, h * 0.42, 0, w * 0.5, h * 0.42, w * 0.3)
-      glow.addColorStop(0, `rgba(229, 9, 20, ${Math.min(progress * 0.12, 0.1)})`)
-      glow.addColorStop(1, 'rgba(0,0,0,0)')
-      ctx.fillStyle = glow
-      ctx.fillRect(0, 0, w, h)
+      // Glow
+      if (progress > 0.05) {
+        const glow = ctx.createRadialGradient(w * 0.5, h * 0.42, 0, w * 0.5, h * 0.42, w * 0.3)
+        glow.addColorStop(0, `rgba(229, 9, 20, ${Math.min(progress * 0.12, 0.1)})`)
+        glow.addColorStop(1, 'rgba(0,0,0,0)')
+        ctx.fillStyle = glow
+        ctx.fillRect(0, 0, w, h)
+      }
 
       const size = Math.min(w, h) * 0.28
       const cx = w * 0.5
@@ -44,87 +56,71 @@ export default function LoadingAnimation({ onComplete }) {
       const tw = size * 0.13
 
       let scale, alpha
-      if (progress < 0.5) {
-        const p = progress / 0.5
+      if (progress < 0.45) {
+        const p = progress / 0.45
         scale = Math.pow(p, 1.4) * 0.2 + p * 0.8
         alpha = Math.min(1, p * 1.8)
-      } else if (progress < 0.78) {
-        const p = (progress - 0.5) / 0.28
+      } else if (progress < 0.75) {
+        const p = (progress - 0.45) / 0.3
         scale = 1 + Math.sin(p * Math.PI * 5) * 0.015
         alpha = 1
-      } else {
-        const p = (progress - 0.78) / 0.22
+      } else if (progress < 0.88) {
         scale = 1
-        alpha = 1 - p * p
+        alpha = 1
+      } else {
+        const p = (progress - 0.88) / 0.12
+        scale = 1
+        alpha = 1 - p
       }
 
-      ctx.save()
-      ctx.globalAlpha = alpha
-      const s = size * scale
-      const t = tw * scale
+      // Always draw Y once progress starts
+      if (progress > 0.01) {
+        ctx.save()
+        ctx.globalAlpha = alpha
+        const s = size * scale
+        const t = tw * scale
 
-      ctx.shadowColor = RED
-      ctx.shadowBlur = 50 * scale
+        ctx.shadowColor = RED
+        ctx.shadowBlur = 50 * scale
 
-      // Left arm
-      ctx.beginPath()
-      ctx.moveTo(cx - s * 0.42, cy - s * 0.78)
-      ctx.lineTo(cx - s * 0.42 + t, cy - s * 0.78)
-      ctx.lineTo(cx + t * 0.5, cy - s * 0.05)
-      ctx.lineTo(cx - t * 0.5, cy - s * 0.05)
-      ctx.closePath()
-      ctx.fillStyle = RED
-      ctx.fill()
-
-      // Right arm
-      ctx.beginPath()
-      ctx.moveTo(cx + s * 0.42, cy - s * 0.78)
-      ctx.lineTo(cx + s * 0.42 - t, cy - s * 0.78)
-      ctx.lineTo(cx - t * 0.5, cy - s * 0.05)
-      ctx.lineTo(cx + t * 0.5, cy - s * 0.05)
-      ctx.closePath()
-      ctx.fillStyle = RED
-      ctx.fill()
-
-      // Stem
-      ctx.beginPath()
-      ctx.moveTo(cx - t * 0.5, cy - s * 0.05)
-      ctx.lineTo(cx + t * 0.5, cy - s * 0.05)
-      ctx.lineTo(cx + t * 0.5, cy + s * 0.72)
-      ctx.lineTo(cx - t * 0.5, cy + s * 0.72)
-      ctx.closePath()
-      ctx.fillStyle = RED
-      ctx.fill()
-
-      ctx.shadowBlur = 0
-
-      // Highlight
-      if (alpha > 0.1 && scale > 0.5) {
-        ctx.globalAlpha = alpha * 0.35
-        const hl = ctx.createLinearGradient(cx - s * 0.4, 0, cx + s * 0.4, 0)
-        hl.addColorStop(0, 'rgba(255,255,255,0)')
-        hl.addColorStop(0.35, `rgba(255,255,255,${0.15 * scale})`)
-        hl.addColorStop(0.65, `rgba(255,255,255,${0.15 * scale})`)
-        hl.addColorStop(1, 'rgba(255,255,255,0)')
-        ctx.fillStyle = hl
+        // Left arm
         ctx.beginPath()
         ctx.moveTo(cx - s * 0.42, cy - s * 0.78)
         ctx.lineTo(cx - s * 0.42 + t, cy - s * 0.78)
         ctx.lineTo(cx + t * 0.5, cy - s * 0.05)
+        ctx.lineTo(cx - t * 0.5, cy - s * 0.05)
+        ctx.closePath()
+        ctx.fillStyle = RED
+        ctx.fill()
+
+        // Right arm
+        ctx.beginPath()
+        ctx.moveTo(cx + s * 0.42, cy - s * 0.78)
         ctx.lineTo(cx + s * 0.42 - t, cy - s * 0.78)
-        ctx.lineTo(cx + s * 0.42, cy - s * 0.78)
+        ctx.lineTo(cx - t * 0.5, cy - s * 0.05)
         ctx.lineTo(cx + t * 0.5, cy - s * 0.05)
         ctx.closePath()
+        ctx.fillStyle = RED
         ctx.fill()
+
+        // Stem
+        ctx.beginPath()
+        ctx.moveTo(cx - t * 0.5, cy - s * 0.05)
+        ctx.lineTo(cx + t * 0.5, cy - s * 0.05)
+        ctx.lineTo(cx + t * 0.5, cy + s * 0.72)
+        ctx.lineTo(cx - t * 0.5, cy + s * 0.72)
+        ctx.closePath()
+        ctx.fillStyle = RED
+        ctx.fill()
+
+        ctx.shadowBlur = 0
+        ctx.restore()
       }
 
-      ctx.restore()
-
-      if (progress >= 1) {
-        if (!finished) {
-          finished = true
-          setTimeout(() => onComplete?.(), 400)
-        }
+      if (progress >= 1 && !finished) {
+        finished = true
+        clearTimeout(fallbackTimer)
+        setTimeout(() => { ready = true; onComplete?.() }, 300)
         return
       }
 
@@ -134,6 +130,7 @@ export default function LoadingAnimation({ onComplete }) {
     animationId = requestAnimationFrame(draw)
 
     return () => {
+      clearTimeout(fallbackTimer)
       if (animationId) cancelAnimationFrame(animationId)
     }
   }, [onComplete])
