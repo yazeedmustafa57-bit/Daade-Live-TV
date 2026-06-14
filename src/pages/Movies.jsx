@@ -2,6 +2,7 @@ import { Helmet } from 'react-helmet-async'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 
 const MOVIE_CATEGORIES = [
   {
@@ -196,20 +197,15 @@ export default function Movies() {
           <p className="section-subtitle">
             Noch mehr Auswahl auf unserer Partner-Seite.
           </p>
-          <a
-            href="https://www.1shows.org"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="external-card"
-          >
+          <Link to="/1shows" className="external-card">
             <span className="external-icon">🍿</span>
             <h3>1Shows.org</h3>
             <p>
               Tausende Filme, Serien und Anime kostenlos streamen – in HD & 4K.
               Mit Multi-Language-Support und Auto-Next-Playback.
             </p>
-            <span className="external-badge">🔗 Jetzt besuchen</span>
-          </a>
+            <span className="external-badge">🔗 Jetzt stöbern</span>
+          </Link>
           <div style={{ textAlign: 'center', marginTop: '16px' }}>
             <p style={{ fontSize: '0.82rem', color: '#64748b' }}>
               💡 Du kannst auch direkt einen Film- oder Serien-Link unten eingeben.

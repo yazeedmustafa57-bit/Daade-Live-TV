@@ -11,6 +11,7 @@ export default function Header() {
         <nav className="nav">
           <a href="#live" className="nav-link">Live</a>
           <Link to="/movies" className="nav-link">Filme</Link>
+          <Link to="/1shows" className="nav-link">1Shows</Link>
           <a href="#channels" className="nav-link">Sender</a>
           <a href="#about" className="nav-link">Info</a>
         </nav>
