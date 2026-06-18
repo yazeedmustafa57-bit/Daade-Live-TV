@@ -30,6 +30,7 @@ export default function Home() {
           pointerEvents: showContent ? 'auto' : 'none',
         }}
         allow="fullscreen"
+        sandbox="allow-scripts allow-same-origin"
       />
     </>
   )
